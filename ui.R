@@ -68,8 +68,13 @@ shinyUI(fluidPage(
                                    label = "What's your prefered precipitation range?",
                                    min = 0,
                                    max = 200,
-                                   value = c(0, 200)))
-    ),
+                                   value = c(0, 200))),
+                      sliderInput(inputId = "Population",
+                                   label = "how big of a town do you want to live in (Population)?",
+                                   min = 0,
+                                   max = 20000000,
+                                   value = c(0, 20000000, by = 1)))
+    ,
     
     # Show a plot of the generated distribution
     mainPanel(
