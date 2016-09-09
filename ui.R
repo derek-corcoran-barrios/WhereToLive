@@ -1,22 +1,16 @@
-
-# This is the user-interface definition of a Shiny web application.
-# You can find out more about building applications with Shiny here:
-#
-# http://shiny.rstudio.com
-#
 library(shiny)
 library(raster)
 library(rworldmap)
 library(rgdal)
+library(leaflet)
 data("countriesCoarse")
 
 
 shinyUI(fluidPage(
-
-  # Application title
+  
   titlePanel("Where should you live according to your climate preferences?"),
-
-  # Sidebar with a slider input for number of bins
+  
+  
   sidebarLayout(
     sidebarPanel(
       h3("Select your climate preferences"),
@@ -69,16 +63,16 @@ shinyUI(fluidPage(
                                    min = 0,
                                    max = 200,
                                    value = c(0, 200))),
-                      sliderInput(inputId = "Population",
-                                   label = "how big of a town do you want to live in (Population)?",
-                                   min = 0,
-                                   max = 20000000,
-                                   value = c(0, 20000000, by = 1)))
+      sliderInput(inputId = "Population",
+                  label = "how big of a town do you want to live in (Population)?",
+                  min = 0,
+                  max = 20000000,
+                  value = c(0, 20000000, by = 1)))
     ,
     
     # Show a plot of the generated distribution
     mainPanel(
-      plotOutput("distPlot"),
+      leafletOutput("map", width = "100%", height = 400),
       downloadButton('downloadPlot', 'Download Plot'),
       dataTableOutput("visFun"),
       downloadButton('downloadData', 'Download Table')

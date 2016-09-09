@@ -1,30 +1,26 @@
-
-# This is the server logic for a Shiny web application.
-# You can find out more about building applications with Shiny here:
-#
-# http://shiny.rstudio.com
-#
-
 library(shiny)
 library(raster)
 library(rworldmap)
 library(rgdal)
 library(dplyr)
+library(leaflet)
+library(sp)
 data("countriesCoarse")
 uno <- readRDS("uno.rds")
 World <- getData('worldclim', var='bio', res=10)
 cities <- readRDS("cities.rds")
 shinyServer(function(input, output) {
   
-  output$distPlot <- renderPlot({
+  output$map <- renderLeaflet({
     uno[World[[10]] > ifelse(input$degrees == "Celcius", (input$MaxTempC*10), (((input$MaxTempF-32)*5/9)*10))] <- NA
     uno[World[[11]] < ifelse(input$degrees == "Celcius", (input$MinTempC*10), (((input$MinTempF-32)*5/9)*10))] <- NA
     uno[World[[1]] < ifelse(input$degrees == "Celcius", min(input$RangeTempC*10), min(((input$RangeTempF-32)*5/9)*10))] <- NA
     uno[World[[1]] > ifelse(input$degrees == "Celcius", max(input$RangeTempC*10), max(((input$RangeTempF-32)*5/9)*10))] <- NA
     uno[World[[12]] < ifelse(input$degrees == "Celcius", min(input$RangePPC), min(input$RangePPF*25.4))] <- NA
     uno[World[[12]] > ifelse(input$degrees == "Celcius", max(input$RangePPC), max(input$RangePPF*25.4))] <- NA
-    plot(uno, col ="red", legend = FALSE)
-    plot(countriesCoarse, add = TRUE)
+    l <- leaflet() %>% setView(0, 0, zoom = 1) %>% addTiles()    
+    l <- l %>% addRasterImage(uno, opacity = 0.5, colors = "red")
+    l
   })
   output$downloadPlot <- downloadHandler(
     filename = function() { paste("WhereToLive", '.png', sep='') },

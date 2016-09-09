@@ -1,8 +1,8 @@
 name: WhereShouldYouLive
 account: derek-corcoran
 server: shinyapps.io
-bundleId: 549268
+bundleId: 552963
 url: https://derek-corcoran.shinyapps.io/WhereShouldYouLive/
-when: 1473094969.23264
+when: 1473421034.45602
 asMultiple: FALSE
 asStatic: FALSE
