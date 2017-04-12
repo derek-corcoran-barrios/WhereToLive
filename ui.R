@@ -1,13 +1,11 @@
-library(shiny)
-library(raster)
-library(rworldmap)
-library(rgdal)
-library(leaflet)
+if (!require("pacman")) install.packages("pacman")
+
+pacman::p_load(shiny, raster, rworldmap, rgdal, leaflet, dplyr, sp)
+
 data("countriesCoarse")
 
 
 shinyUI(fluidPage(
-  
   titlePanel("Where should you live according to your climate preferences?"),
   
   

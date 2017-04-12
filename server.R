@@ -1,10 +1,7 @@
-library(shiny)
-library(raster)
-library(rworldmap)
-library(rgdal)
-library(dplyr)
-library(leaflet)
-library(sp)
+if (!require("pacman")) install.packages("pacman")
+
+pacman::p_load(shiny, raster, rworldmap, rgdal, leaflet, dplyr, sp)
+
 data("countriesCoarse")
 uno <- readRDS("uno.rds")
 World <- getData('worldclim', var='bio', res=10)
